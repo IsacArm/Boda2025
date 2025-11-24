@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda Isac & Evelyn</title>
+    
+    <!-- Fuentes Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Iconos y Animaciones -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* --- PALETA DE COLORES Y VARIABLES --- */
+        :root {
+            --bg-color: #fdfbf7; /* Crema muy suave */
+            --text-color: #2c2c2c;
+            --gold: #bfa45f; /* Dorado elegante */
+            --font-script: 'Pinyon Script', cursive; /* Para nombres */
+            --font-serif: 'Cinzel', serif; /* Para títulos */
+            --font-body: 'Lato', sans-serif; /* Para textos */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        /* --- TIPOGRAFÍA --- */
+        h1 { font-family: var(--font-script); font-size: 4rem; color: var(--text-color); margin: 0; line-height: 1.2; }
+        h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--gold); margin-bottom: 20px; letter-spacing: 2px; }
+        p { font-size: 1.1rem; color: #555; line-height: 1.8; }
+        
+        /* --- SECCIONES --- */
+        section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+
+        /* --- HERO (PORTADA) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Fondo con imagen romántica */
+            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.8)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .date-hero {
+            font-family: var(--font-serif);
+            letter-spacing: 5px;
+            margin-top: 20px;
+            border-top: 1px solid var(--gold);
+            border-bottom: 1px solid var(--gold);
+            padding: 10px 20px;
+        }
+
+        /* --- CONTADOR --- */
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .timer-box {
+            background: #fff;
+            padding: 15px;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 5px;
+        }
+        .timer-number { font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold); font-weight: bold; }
+        .timer-label { font-size: 0.8rem; text-transform: uppercase; }
+
+        /* --- MAPA --- */
+        .map-container {
+            width: 100%;
+            height: 450px;
+            background: #eee;
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        /* Ajustamos el iframe para que sea responsivo */
+        .map-container iframe { 
+            width: 100% !important; 
+            height: 100% !important; 
+            border: 0; 
+        }
+
+        /* --- GENERADOR DE PASE (GOLDEN TICKET) --- */
+        .generator-section { background-color: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.05); margin-bottom: 50px; }
+        
+        #ticket-container {
+            /* Este es el diseño que se descarga */
+            width: 320px;
+            height: 550px;
+            background: #1a1a1a; /* Fondo oscuro elegante */
+            color: #fff;
+            margin: 30px auto;
+            position: relative;
+            padding: 30px;
+            border: 2px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        #ticket-container::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(191, 164, 95, 0.5);
+            pointer-events: none;
+        }
+
+        .ticket-header { font-family: var(--font-serif); letter-spacing: 3px; color: var(--gold); font-size: 0.9rem; }
+        .ticket-names { font-family: var(--font-script); font-size: 3rem; color: #fff; margin: 20px 0; }
+        .ticket-guest-label { font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase;}
+        .ticket-guest-name { 
+            font-family: var(--font-serif); 
+            font-size: 1.6rem; 
+            color: var(--gold); 
+            border-bottom: 1px solid #555; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px; 
+            word-wrap: break-word;
+        }
+        .ticket-date { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 2px; }
+
+        /* --- FORMULARIO RSVP --- */
+        .input-styled {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            background: transparent;
+            font-family: var(--font-body);
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .input-styled:focus { border-color: var(--gold); background: #fff; }
+
+        .btn {
+            background-color: var(--text-color);
+            color: #fff;
+            padding: 15px 40px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            font-family: var(--font-serif);
+        }
+        .btn:hover { background-color: var(--gold); }
+        .btn-gold { background-color: var(--gold); }
+        .btn-gold:hover { background-color: #9e864a; }
+
+        .loader { display: none; font-size: 0.9rem; margin-top: 10px; color: var(--gold); }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            .timer { gap: 10px; }
+            .timer-box { min-width: 60px; padding: 10px; }
+            section { padding: 50px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div data-aos="fade-down" data-aos-duration="1500">
+            <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem;">¡Nos Casamos!</p>
+            <h1>Isac & Evelyn</h1>
+            <div class="date-hero">27 . 12 . 2025</div>
+        </div>
+    </div>
+
+    <!-- CUENTA REGRESIVA -->
+    <section data-aos="fade-up">
+        <h2>Faltan</h2>
+        <div class="timer" id="countdown">
+            <div class="timer-box"><div class="timer-number" id="dias">00</div><div class="timer-label">Días</div></div>
+            <div class="timer-box"><div class="timer-number" id="horas">00</div><div class="timer-label">Hs</div></div>
+            <div class="timer-box"><div class="timer-number" id="minutos">00</div><div class="timer-label">Min</div></div>
+            <div class="timer-box"><div class="timer-number" id="segundos">00</div><div class="timer-label">Seg</div></div>
+        </div>
+    </section>
+
+    <!-- LUGAR / MAPA ACTUALIZADO -->
+    <section data-aos="fade-up">
+        <h2>Ubicación</h2>
+        <p>Acompáñanos a celebrar nuestro amor en:</p>
+        <p><strong style="font-size: 1.3rem;">Terraza MonSan</strong></p>
+        
+        <div class="map-container">
+            <!-- AQUÍ ESTÁ TU MAPA INTEGRADO -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1257.1278696233906!2d-101.1948936778549!3d20.591213205576583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842c852112da243f%3A0x9a3ff8900801ae34!2sTerraza%20MonSan!5e0!3m2!1ses!2smx!4v1764016380319!5m2!1ses!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        
+        <a href="https://maps.app.goo.gl/tuLinkAqui" target="_blank" class="btn" style="display:inline-block; text-decoration:none; margin-top:20px;">Cómo Llegar</a>
+    </section>
+
+    <!-- GENERADOR DE INVITACIÓN -->
+    <section class="generator-section" id="ticket-area" data-aos="zoom-in">
+        <h2>Tu Pase de Entrada</h2>
+        <p>Por favor ingresa tu nombre completo para generar tu invitación personalizada.<br>Descárgala y guárdala en tu celular.</p>
+        
+        <input type="text" id="nameInput" class="input-styled" placeholder="Escribe tu nombre aquí..." maxlength="22" style="max-width: 320px;">
+        
+        <!-- Diseño del Ticket a Descargar -->
+        <div id="ticket-container">
+            <div class="ticket-header">INVITACIÓN EXCLUSIVA</div>
+            
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <div class="ticket-names">Isac & Evelyn</div>
+                <div class="ticket-guest-label">Invitado Especial</div>
+                <div class="ticket-guest-name" id="ticketName">Tu Nombre</div>
+            </div>
+
+            <div class="ticket-date">
+                27 DE DICIEMBRE, 2025<br>
+                TERRAZA MONSAN
+            </div>
+        </div>
+
+        <button class="btn btn-gold" onclick="downloadTicket()">Descargar Invitación</button>
+    </section>
+
+    <!-- RSVP / CONFIRMACIÓN -->
+    <section data-aos="fade-up" style="background-color: #f7f5f0; width: 100%; max-width: 100%;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2>Confirmar Asistencia</h2>
+            <p>Es muy importante para nosotros saber si podrás acompañarnos.</p>
+            
+            <form id="rsvpForm" style="max-width: 400px; margin: 30px auto;">
+                <input type="text" name="nombre" class="input-styled" placeholder="Nombre completo" required>
+                <input type="tel" name="telefono" class="input-styled" placeholder="Teléfono" required>
+                <input type="number" name="pases" class="input-styled" placeholder="Cantidad de personas" min="1" max="10" required>
+                <select name="asistencia" class="input-styled">
+                    <option value="Si">¡Sí, ahí estaré!</option>
+                    <option value="No">Lamentablemente no podré</option>
+                </select>
+                
+                <button type="submit" class="btn">Enviar Confirmación</button>
+                <div id="loader" class="loader">Guardando tu respuesta... por favor espera.</div>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 40px; background: #1a1a1a; color: #777; margin-top: 0;">
+        <p style="font-size: 0.9rem;">Con amor, Isac & Evelyn</p>
+        <p style="font-size: 0.7rem;">Diciembre 2025</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        AOS.init();
+
+        // 1. CUENTA REGRESIVA (Fecha: 27 Dic 2025)
+        const bodaDate = new Date("Dec 27, 2025 15:00:00").getTime(); // Puse 3 PM como ejemplo
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = bodaDate - now;
+            
+            document.getElementById("dias").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("horas").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutos").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("segundos").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML = "¡Hoy es el gran día!";
+            }
+        }, 1000);
+
+        // 2. ACTUALIZAR NOMBRE EN TICKET
+        document.getElementById('nameInput').addEventListener('input', function(e) {
+            const val = e.target.value;
+            document.getElementById('ticketName').innerText = val === '' ? 'Tu Nombre' : val;
+        });
+
+        // 3. DESCARGAR IMAGEN
+        function downloadTicket() {
+            const ticket = document.getElementById("ticket-container");
+            window.scrollTo(0, document.getElementById("ticket-area").offsetTop); 
+            
+            html2canvas(ticket, { scale: 2, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Invitacion-Boda-Isac-Evelyn.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+
+        // 4. GUARDAR REGISTRO EN GOOGLE SHEETS
+        // *** IMPORTANTE: PEGA AQUÍ TU URL DE APPS SCRIPT ENTRE LAS COMILLAS ***
+        const scriptURL = 'AQUI_PEGARAS_TU_URL_DE_GOOGLE_APPS_SCRIPT'; 
+        
+        const form = document.forms['rsvpForm'];
+        const loader = document.getElementById('loader');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            loader.style.display = 'block';
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    loader.style.display = 'none';
+                    alert("¡Gracias! Hemos recibido tu confirmación correctamente.");
+                    form.reset();
+                })
+                .catch(error => {
+                    loader.style.display = 'none';
+                    console.error('Error!', error.message);
+                    alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                });
+        });
+    </script>
+</body>
+</html>
