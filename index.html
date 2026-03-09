@@ -1,341 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda Evelyn e Isac | 2026</title>
-    
-    <!-- Fuentes Premium -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    
-    <!-- Iconos y Animaciones -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        /* --- PALETA DE COLORES Y VARIABLES --- */
-        :root {
-            --bg-color: #fdfbf7; /* Crema muy suave */
-            --text-color: #2c2c2c;
-            --gold: #bfa45f; /* Dorado elegante */
-            --font-script: 'Pinyon Script', cursive; /* Para nombres */
-            --font-serif: 'Cinzel', serif; /* Para títulos */
-            --font-body: 'Lato', sans-serif; /* Para textos */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="Boda Civil · Evelyn &amp; Isac · 21 Marzo 2026 · Salamanca, Gto.">
+<meta name="theme-color" content="#0b0a08">
+<title>Evelyn &amp; Isac · 21 Marzo 2026</title>
 
-        * { box-sizing: border-box; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&family=Great+Vibes&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            text-align: center;
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-        /* --- TIPOGRAFÍA --- */
-        h1 { font-family: var(--font-script); font-size: 4rem; color: var(--text-color); margin: 0; line-height: 1.2; }
-        h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--gold); margin-bottom: 20px; letter-spacing: 2px; }
-        p { font-size: 1.1rem; color: #555; line-height: 1.8; }
-        
-        /* --- SECCIONES --- */
-        section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
-
-        /* --- HERO (PORTADA) --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* Fondo con imagen romántica */
-            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.8)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        .date-hero {
-            font-family: var(--font-serif);
-            letter-spacing: 5px;
-            margin-top: 20px;
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
-            padding: 10px 20px;
-        }
-
-        /* --- CONTADOR --- */
-        .timer {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        .timer-box {
-            background: #fff;
-            padding: 15px;
-            min-width: 80px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-radius: 5px;
-        }
-        .timer-number { font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold); font-weight: bold; }
-        .timer-label { font-size: 0.8rem; text-transform: uppercase; }
-
-        /* --- MAPA --- */
-        .map-container {
-            width: 100%;
-            height: 450px;
-            background: #eee;
-            margin-top: 30px;
-            border: 1px solid #ddd;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-        /* Ajustamos el iframe para que sea responsivo */
-        .map-container iframe { 
-            width: 100% !important; 
-            height: 100% !important; 
-            border: 0; 
-        }
-
-        /* --- GENERADOR DE PASE (GOLDEN TICKET) --- */
-        .generator-section { background-color: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.05); margin-bottom: 50px; }
-        
-        #ticket-container {
-            /* Este es el diseño que se descarga */
-            width: 320px;
-            height: 550px;
-            background: #1a1a1a; /* Fondo oscuro elegante */
-            color: #fff;
-            margin: 30px auto;
-            position: relative;
-            padding: 30px;
-            border: 2px solid var(--gold);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-
-        #ticket-container::before {
-            content: '';
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(191, 164, 95, 0.5);
-            pointer-events: none;
-        }
-
-        .ticket-header { font-family: var(--font-serif); letter-spacing: 3px; color: var(--gold); font-size: 0.9rem; }
-        .ticket-names { font-family: var(--font-script); font-size: 3rem; color: #fff; margin: 20px 0; }
-        .ticket-guest-label { font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase;}
-        .ticket-guest-name { 
-            font-family: var(--font-serif); 
-            font-size: 1.6rem; 
-            color: var(--gold); 
-            border-bottom: 1px solid #555; 
-            padding-bottom: 10px; 
-            margin-bottom: 20px; 
-            word-wrap: break-word;
-        }
-        .ticket-date { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 2px; }
-
-        /* --- FORMULARIO RSVP --- */
-        .input-styled {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            background: transparent;
-            font-family: var(--font-body);
-            text-align: center;
-            outline: none;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-        .input-styled:focus { border-color: var(--gold); background: #fff; }
-
-        .btn {
-            background-color: var(--text-color);
-            color: #fff;
-            padding: 15px 40px;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-            font-family: var(--font-serif);
-        }
-        .btn:hover { background-color: var(--gold); }
-        .btn-gold { background-color: var(--gold); }
-        .btn-gold:hover { background-color: #9e864a; }
-
-        .loader { display: none; font-size: 0.9rem; margin-top: 10px; color: var(--gold); }
-
-        /* Responsivo */
-        @media (max-width: 600px) {
-            h1 { font-size: 3rem; }
-            .timer { gap: 10px; }
-            .timer-box { min-width: 60px; padding: 10px; }
-            section { padding: 50px 20px; }
-        }
-    </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- HERO -->
-    <div class="hero">
-        <div data-aos="fade-down" data-aos-duration="1500">
-            <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem;">¡Nos Casamos!</p>
-            <h1>Evelyn & Isac</h1>
-            <div class="date-hero">31 . 01 . 2026</div>
-        </div>
+<!-- ══════════ INTRO ══════════ -->
+<div id="intro">
+  <!-- Rings: two divs + center gem, animated via JS -->
+  <div class="rings-stage">
+    <div class="ring ring-a" id="ringA">
+      <div class="ring-gem"></div>
     </div>
+    <div class="ring ring-b" id="ringB">
+      <div class="ring-gem"></div>
+    </div>
+    <div class="ring-sparkle" id="ringSpark">
+      <div class="spark-h"></div>
+      <div class="spark-v"></div>
+    </div>
+  </div>
+  <p class="intro-names" id="introNames">Evelyn &amp; Isac</p>
+  <p class="intro-date"  id="introDate">21 · MARZO · 2026</p>
+  <button class="intro-btn" id="introBtn" onclick="closeIntro()">Ver Invitación</button>
+</div>
 
-    <!-- CUENTA REGRESIVA -->
-    <section data-aos="fade-up">
-        <h2>Faltan</h2>
-        <div class="timer" id="countdown">
-            <div class="timer-box"><div class="timer-number" id="dias">00</div><div class="timer-label">Días</div></div>
-            <div class="timer-box"><div class="timer-number" id="horas">00</div><div class="timer-label">Hs</div></div>
-            <div class="timer-box"><div class="timer-number" id="minutos">00</div><div class="timer-label">Min</div></div>
-            <div class="timer-box"><div class="timer-number" id="segundos">00</div><div class="timer-label">Seg</div></div>
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="particles" class="particles-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-pre">Boda Civil</p>
+    <h1 class="hero-title">Evelyn &amp; Isac</h1>
+    <div class="ornament">
+      <div class="orn-line"></div>
+      <div class="orn-gem"></div>
+      <div class="orn-line orn-line-r"></div>
+    </div>
+    <p class="hero-date">21 · MARZO · 2026</p>
+    <p class="hero-city">Salamanca, Guanajuato</p>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-label">Desplaza</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ══════════ COUNTDOWN ══════════ -->
+<section id="countdown" class="s-dark2">
+  <p class="sec-label reveal">El Gran Día</p>
+  <h2 class="sec-title reveal">Falta <em>muy poco</em> para el sí</h2>
+  <div class="cd-grid reveal">
+    <div class="cd-box"><span class="cd-num" id="d">--</span><span class="cd-lbl">Días</span></div>
+    <div class="cd-box"><span class="cd-num" id="h">--</span><span class="cd-lbl">Horas</span></div>
+    <div class="cd-box"><span class="cd-num" id="m">--</span><span class="cd-lbl">Min</span></div>
+    <div class="cd-box"><span class="cd-num" id="s">--</span><span class="cd-lbl">Seg</span></div>
+  </div>
+  <p class="cd-msg" id="cdMsg"></p>
+</section>
+
+<div class="wave w-dark2-out"><svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,40 C480,0 960,40 1440,0 L1440,40Z" fill="#141210"/></svg></div>
+
+<!-- ══════════ GALLERY ══════════ -->
+<section id="gallery" class="s-dark3">
+  <p class="sec-label reveal">Memorias</p>
+  <h2 class="sec-title reveal">Momentos que <em>nos definen</em></h2>
+
+  <div class="collage reveal" id="collage">
+    <div class="ph ph1" data-idx="0"><img src="sources/1.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph2" data-idx="1"><img src="sources/2.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph3" data-idx="2"><img src="sources/3.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph4" data-idx="3"><img src="sources/4.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph5" data-idx="4"><img src="sources/5.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph6" data-idx="5"><img src="sources/6.jpeg" alt="" loading="lazy"></div>
+    <div class="collage-label">
+      <span class="cl-script">¡Te esperamos!</span>
+    </div>
+    <div class="collage-mono">E &amp; I</div>
+  </div>
+
+  <div id="lb" class="lb" onclick="closeLb()">
+    <button class="lb-x" onclick="closeLb()">&#x2715;</button>
+    <button class="lb-p" onclick="lbNav(-1,event)">&#x2039;</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-n" onclick="lbNav(1,event)">&#x203a;</button>
+  </div>
+</section>
+
+<div class="wave w-dark3-out"><svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,0 C480,40 960,0 1440,40 L1440,0Z" fill="#141210"/></svg></div>
+
+<!-- ══════════ LOCATION ══════════ -->
+<section id="location" class="s-dark">
+  <p class="sec-label reveal">El Lugar</p>
+  <h2 class="sec-title reveal">¿Dónde nos <em>encontramos?</em></h2>
+
+  <div class="schedule reveal">
+    <div class="sch-card">
+      <div class="sch-gem"></div>
+      <p class="sch-group">Familia</p>
+      <p class="sch-time">3:00 PM</p>
+      <p class="sch-sub">Recepción</p>
+    </div>
+    <div class="sch-div">
+      <div class="sch-div-l"></div>
+      <span class="sch-div-mark">✦</span>
+      <div class="sch-div-l"></div>
+    </div>
+    <div class="sch-card">
+      <div class="sch-gem"></div>
+      <p class="sch-group">Amigos</p>
+      <p class="sch-time">7:00 PM</p>
+      <p class="sch-sub">Recepción</p>
+    </div>
+  </div>
+
+  <div class="venue-list reveal">
+    <div class="v-row">
+      <span class="v-gem">◆</span>
+      <div class="v-txt"><strong>Fecha</strong>Sábado, 21 de Marzo de 2026</div>
+    </div>
+    <div class="v-row">
+      <span class="v-gem">◆</span>
+      <div class="v-txt"><strong>Dirección</strong>Carr. Lázaro Cárdenas 303, Lazaro Cardenas, 36723 Salamanca, Gto.</div>
+    </div>
+    <div class="v-row">
+      <span class="v-gem">◆</span>
+      <div class="v-txt"><strong>Estacionamiento</strong>Disponible en el lugar</div>
+    </div>
+  </div>
+
+  <div class="map-wrap reveal">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2859.5477482453857!2d-101.20191912610214!3d20.591344480950735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842c84fb881f53af%3A0xb4ca682e0be89faa!2sCarr.%20L%C3%A1zaro%20C%C3%A1rdenas%20303%2C%20Lazaro%20Cardenas%2C%2036723%20Salamanca%2C%20Gto.!5e1!3m2!1ses!2smx!4v1773073055757!5m2!1ses!2smx"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación"></iframe>
+  </div>
+  <div class="center-act reveal">
+    <a href="https://maps.google.com/?q=Carr.+Lazaro+Cardenas+303+Salamanca+Guanajuato" target="_blank" rel="noopener">
+      <button class="btn-gold">Abrir en Google Maps</button>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════ BYOB ══════════ -->
+<section id="byob" class="s-dark2 byob-sec">
+  <div class="byob-inner reveal">
+    <div class="byob-orn">
+      <div class="orn-line"></div>
+      <span class="byob-fleur">&#x2767;</span>
+      <div class="orn-line orn-line-r"></div>
+    </div>
+    <h2 class="sec-title" style="margin-bottom:14px;">Bring Your Own <em>Bottle</em></h2>
+    <p class="byob-body">Para que la celebración sea aún más especial, cada invitado puede traer su bebida favorita. Compartamos copas, risas y brindemos por esta nueva etapa llena de amor.</p>
+    <span class="byob-tag">Trae tu bebida favorita</span>
+  </div>
+</section>
+
+<div class="wave w-dark2-in"><svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,40 C480,0 960,40 1440,0 L1440,40Z" fill="#0b0a08"/></svg></div>
+
+<!-- ══════════ INVITATION ══════════ -->
+<section id="invitation" class="s-dark">
+  <p class="sec-label reveal">Tu Pase</p>
+  <h2 class="sec-title reveal">Genera tu <em>invitación</em></h2>
+
+  <div class="inv-wrap reveal">
+    <input type="text" id="guestName" class="inv-input"
+      placeholder="Escribe tu nombre completo"
+      onkeydown="if(event.key==='Enter')createTicket()"
+      maxlength="60" autocomplete="name">
+    <button class="btn-gold" onclick="createTicket()">Generar Invitación</button>
+
+    <div id="ticket">
+      <div class="tn tn-l"></div><div class="tn tn-r"></div>
+      <div class="t-top">
+        <p class="t-pre">Invitación · Boda Civil</p>
+        <p class="t-names">Evelyn &amp; Isac</p>
+        <p class="t-glbl">Invitado de Honor</p>
+        <p class="t-guest" id="ticketGuest">Tu Nombre</p>
+        <div class="t-row">
+          <div class="td"><span class="td-l">Fecha</span><span class="td-v">21 MAR 2026</span></div>
+          <div class="td"><span class="td-l">Lugar</span><span class="td-v">Salamanca, GTO</span></div>
         </div>
-    </section>
-
-    <!-- LUGAR / MAPA ACTUALIZADO -->
-    <section data-aos="fade-up">
-        <h2>Ubicación</h2>
-        <p>Acompáñanos a celebrar nuestra unión civil:</p>
-        <p><strong style="font-size: 1.3rem;">Terraza MonSan</strong></p>
-        
-        <div class="map-container">
-            <!-- AQUÍ ESTÁ TU MAPA INTEGRADO -->
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1257.1278696233906!2d-101.1948936778549!3d20.591213205576583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842c852112da243f%3A0x9a3ff8900801ae34!2sTerraza%20MonSan!5e0!3m2!1ses!2smx!4v1764016380319!5m2!1ses!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="t-bot">
+        <div id="qrcode"></div>
+        <p class="t-hint">Presenta este código en la entrada</p>
+        <div class="t-acts">
+          <button class="btn-out" onclick="downloadTicket()">Descargar</button>
+          <button class="btn-out" onclick="shareTicket()">Compartir</button>
         </div>
-        
-        <a href="https://maps.app.goo.gl/tuLinkAqui" target="_blank" class="btn" style="display:inline-block; text-decoration:none; margin-top:20px;">Cómo Llegar</a>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- GENERADOR DE INVITACIÓN -->
-    <section class="generator-section" id="ticket-area" data-aos="zoom-in">
-        <h2>Tu Pase de Entrada</h2>
-        <p>Por favor ingresa tu nombre completo para generar tu invitación personalizada.<br>Descárgala y guárdala en tu celular.</p>
-        
-        <input type="text" id="nameInput" class="input-styled" placeholder="Escribe tu nombre aquí..." maxlength="22" style="max-width: 320px;">
-        
-        <!-- Diseño del Ticket a Descargar -->
-        <div id="ticket-container">
-            <div class="ticket-header">INVITACIÓN EXCLUSIVA</div>
-            
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <div class="ticket-names">Evelyn & Isac </div>
-                <div class="ticket-guest-label">Invitado Especial</div>
-                <div class="ticket-guest-name" id="ticketName">Tu Nombre</div>
-            </div>
+<!-- ══════════ RSVP ══════════ -->
+<section id="rsvp" class="s-rsvp">
+  <p class="sec-label reveal">Confirmación</p>
+  <h2 class="sec-title reveal">¿Nos vas a <em>acompañar?</em></h2>
 
-            <div class="ticket-date">
-                31 DE ENERO, 2026<br>
-                TERRAZA MONSAN
-            </div>
-        </div>
+  <form class="rsvp-form reveal" id="rsvpForm"
+    action="https://formspree.io/f/xaqpqlkz"
+    method="POST" onsubmit="handleRSVP(event)" novalidate>
+    <input type="hidden" name="_subject" value="Nueva confirmacion · Boda Evelyn &amp; Isac">
+    <input type="text"   name="_gotcha"  style="display:none" tabindex="-1" autocomplete="off">
 
-        <button class="btn btn-gold" onclick="downloadTicket()">Descargar Invitación</button>
-    </section>
+    <input type="text"   class="rf" id="rsvpName"    name="nombre"      placeholder="Nombre completo *"          required maxlength="80">
+    <input type="tel"    class="rf" id="rsvpPhone"   name="whatsapp"    placeholder="WhatsApp (opcional)"        maxlength="20">
+    <input type="number" class="rf" id="rsvpCount"   name="asistentes"  placeholder="Numero de asistentes *"     min="1" max="10" required>
+    <select class="rf rf-sel" id="rsvpGroup"   name="recepcion"   required>
+      <option value="">A que recepcion asistes *</option>
+      <option value="Familia - 3:00 PM">Familia — 3:00 PM</option>
+      <option value="Amigos - 7:00 PM">Amigos — 7:00 PM</option>
+    </select>
+    <select class="rf rf-sel" id="rsvpConfirm" name="confirmacion" required>
+      <option value="">Confirmas tu asistencia *</option>
+      <option value="Si, ahi estare">Sí, ahí estaré</option>
+      <option value="No podre asistir">No podré asistir</option>
+      <option value="Lo confirmo pronto">Lo confirmo pronto</option>
+    </select>
+    <textarea class="rf rf-area" id="rsvpMsg" name="mensaje" placeholder="Mensaje para los novios (opcional)" maxlength="200" rows="3"></textarea>
+    <button type="submit" class="btn-gold">Confirmar Asistencia</button>
+    <p class="rf-note">* Campos obligatorios</p>
+  </form>
 
-    <!-- RSVP / CONFIRMACIÓN -->
-    <section data-aos="fade-up" style="background-color: #f7f5f0; width: 100%; max-width: 100%;">
-        <div style="max-width: 900px; margin: 0 auto;">
-            <h2>Confirmar Asistencia</h2>
-            <p>Es muy importante para nosotros saber si podrás acompañarnos.</p>
-            
-            <form id="rsvpForm" style="max-width: 400px; margin: 30px auto;">
-                <input type="text" name="nombre" class="input-styled" placeholder="Nombre completo" required>
-                <input type="tel" name="telefono" class="input-styled" placeholder="Teléfono" required>
-                <input type="number" name="pases" class="input-styled" placeholder="Cantidad de personas" min="1" max="10" required>
-                <select name="asistencia" class="input-styled">
-                    <option value="Si">¡Sí, ahí estaré!</option>
-                    <option value="No">Lamentablemente no podré</option>
-                </select>
-                
-                <button type="submit" class="btn">Enviar Confirmación</button>
-                <div id="loader" class="loader">Guardando tu respuesta... por favor espera.</div>
-            </form>
-        </div>
-    </section>
+  <div class="rsvp-ok" id="rsvpOk">
+    <div class="rsvp-orn">
+      <div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line orn-line-r"></div>
+    </div>
+    <h3 id="rsvpTitle">Gracias</h3>
+    <p  id="rsvpBody">Hemos recibido tu confirmación.</p>
+    <button class="btn-out" style="margin-top:20px;" onclick="resetRSVP()">Modificar respuesta</button>
+  </div>
+</section>
 
-    <footer style="padding: 40px; background: #1a1a1a; color: #777; margin-top: 0;">
-        <p style="font-size: 0.9rem;">Con amor, Isac & Evelyn</p>
-        <p style="font-size: 0.7rem;">Enero 2026</p>
-    </footer>
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p class="ft-names">Isac &amp; Evelyn</p>
+  <p class="ft-date">21 · Marzo · 2026 · Salamanca, Guanajuato</p>
+  <p class="ft-msg">Gracias por ser parte de nuestra historia.<br>Su presencia es el regalo más grande.</p>
+  <div class="ft-orn">
+    <div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line orn-line-r"></div>
+  </div>
+  <p class="ft-copy">· 2026</p>
+</footer>
 
-    <!-- SCRIPTS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<div id="toast" class="toast"></div>
 
-    <script>
-        AOS.init();
-
-        // 1. CUENTA REGRESIVA (Fecha: 27 Dic 2025)
-        const bodaDate = new Date("Jun 31, 2026 15:00:00").getTime(); // Puse 3 PM como ejemplo
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = bodaDate - now;
-            
-            document.getElementById("dias").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("horas").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutos").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("segundos").innerText = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            if (distance < 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").innerHTML = "¡Hoy es el gran día!";
-            }
-        }, 1000);
-
-        // 2. ACTUALIZAR NOMBRE EN TICKET
-        document.getElementById('nameInput').addEventListener('input', function(e) {
-            const val = e.target.value;
-            document.getElementById('ticketName').innerText = val === '' ? 'Tu Nombre' : val;
-        });
-
-        // 3. DESCARGAR IMAGEN
-        function downloadTicket() {
-            const ticket = document.getElementById("ticket-container");
-            window.scrollTo(0, document.getElementById("ticket-area").offsetTop); 
-            
-            html2canvas(ticket, { scale: 2, backgroundColor: null }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Invitacion-Boda-Isac-Evelyn.png';
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-            });
-        }
-
-        // 4. GUARDAR REGISTRO EN GOOGLE SHEETS
-        // *** IMPORTANTE: PEGA AQUÍ TU URL DE APPS SCRIPT ENTRE LAS COMILLAS ***
-        const scriptURL = 'AQUI_PEGARAS_TU_URL_DE_GOOGLE_APPS_SCRIPT'; 
-        
-        const form = document.forms['rsvpForm'];
-        const loader = document.getElementById('loader');
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            loader.style.display = 'block';
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    loader.style.display = 'none';
-                    alert("¡Gracias! Hemos recibido tu confirmación correctamente.");
-                    form.reset();
-                })
-                .catch(error => {
-                    loader.style.display = 'none';
-                    console.error('Error!', error.message);
-                    alert("Hubo un error al enviar. Por favor intenta de nuevo.");
-                });
-        });
-    </script>
+<script src="script.js"></script>
 </body>
-
 </html>
