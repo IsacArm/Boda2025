@@ -81,8 +81,8 @@
 
 <!-- ══════════ COUNTDOWN ══════════ -->
 <section id="countdown" class="s-dark2">
-  <p class="sec-label reveal">Nuestra Unión Civil</p>
-  <h2 class="sec-title reveal">Falta <em>muy poco</em></h2>
+  <p class="sec-label reveal">El Gran Día</p>
+  <h2 class="sec-title reveal">Falta <em>muy poco</em> para el sí</h2>
   <div class="cd-grid reveal">
     <div class="cd-box"><span class="cd-num" id="d">--</span><span class="cd-lbl">Días</span></div>
     <div class="cd-box"><span class="cd-num" id="h">--</span><span class="cd-lbl">Horas</span></div>
@@ -96,13 +96,13 @@
 
 <!-- ══════════ GALLERY ══════════ -->
 <section id="gallery" class="s-dark3">
-  <p class="sec-label reveal">Galeria</p>
-  <h2 class="sec-title reveal">Momentos<em></em></h2>
+  <p class="sec-label reveal">Memorias</p>
+  <h2 class="sec-title reveal">Momentos que <em>nos definen</em></h2>
 
   <div class="collage reveal" id="collage">
-    <div class="ph ph1" data-idx="0"><img src="sources/1.jpeg" alt="" loading="lazy"></div>
-    <div class="ph ph2" data-idx="1"><img src="sources/2.jpeg" alt="" loading="lazy"></div>
-    <div class="ph ph3" data-idx="2"><img src="sources/3.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph1" data-idx="0"><img src="sources/2.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph2" data-idx="1"><img src="sources/3.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph3" data-idx="2"><img src="sources/1.jpeg" alt="" loading="lazy"></div>
     <div class="ph ph4" data-idx="3"><img src="sources/5.jpeg" alt="" loading="lazy"></div>
     <div class="ph ph5" data-idx="4"><img src="sources/6.jpeg" alt="" loading="lazy"></div>
     <div class="ph ph6" data-idx="5"><img src="sources/7.jpeg" alt="" loading="lazy"></div>
@@ -189,42 +189,6 @@
 
 <div class="wave w-dark2-in"><svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,40 C480,0 960,40 1440,0 L1440,40Z" fill="#0b0a08"/></svg></div>
 
-<!-- ══════════ INVITATION ══════════ -->
-<section id="invitation" class="s-dark">
-  <p class="sec-label reveal">Tu Pase</p>
-  <h2 class="sec-title reveal">Genera tu <em>invitación</em></h2>
-
-  <div class="inv-wrap reveal">
-    <input type="text" id="guestName" class="inv-input"
-      placeholder="Escribe tu nombre completo"
-      onkeydown="if(event.key==='Enter')createTicket()"
-      maxlength="60" autocomplete="name">
-    <button class="btn-gold" onclick="createTicket()">Generar Invitación</button>
-
-    <div id="ticket">
-      <div class="tn tn-l"></div><div class="tn tn-r"></div>
-      <div class="t-top">
-        <p class="t-pre">Invitación · Boda Civil</p>
-        <p class="t-names">Evelyn &amp; Isac</p>
-        <p class="t-glbl">Invitado de Honor</p>
-        <p class="t-guest" id="ticketGuest">Tu Nombre</p>
-        <div class="t-row">
-          <div class="td"><span class="td-l">Fecha</span><span class="td-v">21 MAR 2026</span></div>
-          <div class="td"><span class="td-l">Lugar</span><span class="td-v">Salamanca, GTO</span></div>
-        </div>
-      </div>
-      <div class="t-bot">
-        <div id="qrcode"></div>
-        <p class="t-hint">Presenta este código en la entrada</p>
-        <div class="t-acts">
-          <button class="btn-out" onclick="downloadTicket()">Descargar</button>
-          <button class="btn-out" onclick="shareTicket()">Compartir</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ══════════ RSVP ══════════ -->
 <section id="rsvp" class="s-rsvp">
   <p class="sec-label reveal">Confirmación</p>
@@ -268,6 +232,36 @@
   </div>
 </section>
 
+<!-- ══════════ INVITATION — solo visible si confirmó asistencia ══════════ -->
+<section id="invitation" class="s-dark inv-hidden">
+  <p class="sec-label">Tu Pase de Entrada</p>
+  <h2 class="sec-title">Tu <em>invitación</em> está lista</h2>
+
+  <div class="inv-wrap">
+    <div id="ticket">
+      <div class="tn tn-l"></div><div class="tn tn-r"></div>
+      <div class="t-top">
+        <p class="t-pre">Invitación · Boda Civil</p>
+        <p class="t-names">Evelyn &amp; Isac</p>
+        <p class="t-glbl">Invitado de Honor</p>
+        <p class="t-guest" id="ticketGuest">Tu Nombre</p>
+        <div class="t-row">
+          <div class="td"><span class="td-l">Fecha</span><span class="td-v">21 MAR 2026</span></div>
+          <div class="td"><span class="td-l">Lugar</span><span class="td-v">Salamanca, GTO</span></div>
+        </div>
+      </div>
+      <div class="t-bot">
+        <div id="qrcode"></div>
+        <p class="t-hint">Presenta este código en la entrada</p>
+        <div class="t-acts">
+          <button class="btn-out" onclick="downloadTicket()">Descargar</button>
+          <button class="btn-out" onclick="shareTicket()">Compartir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
   <p class="ft-names">Isac &amp; Evelyn</p>
@@ -276,7 +270,7 @@
   <div class="ft-orn">
     <div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line orn-line-r"></div>
   </div>
-  <p class="ft-copy">Marzo · 2026</p>
+  <p class="ft-copy">Hecho con amor · 2026</p>
 </footer>
 
 <div id="toast" class="toast"></div>

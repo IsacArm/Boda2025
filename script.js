@@ -6,11 +6,20 @@
 const WEDDING_DATE = new Date('2026-03-21T15:00:00');
 const SITE_URL     = window.location.href;
 
+/* ─── INTRO READY — triggers CSS animations once page is loaded ── */
+// Small delay lets fonts & CSS settle before animating
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const intro = document.getElementById('intro');
+    if (intro) intro.classList.add('ready');
+  }, 80);
+});
+
 /* ─── CLOSE INTRO ───────────────────────────────── */
 function closeIntro() {
   const el = document.getElementById('intro');
   el.classList.add('out');
-  setTimeout(() => { el.style.display = 'none'; }, 840);
+  setTimeout(() => { el.style.display = 'none'; }, 940);
 }
 
 /* ═══════════════════════════════════════════════
@@ -183,21 +192,11 @@ document.addEventListener('keydown', e => {
 
 /* ═══════════════════════════════════════════════
    INVITATION TICKET
+   Se genera automáticamente tras confirmar asistencia
    ═══════════════════════════════════════════════ */
-function createTicket() {
-  const input  = document.getElementById('guestName');
-  const name   = input.value.trim();
-  const ticket = document.getElementById('ticket');
+function generateTicket(name) {
+  if (!name) return;
 
-  if (!name) {
-    input.style.borderColor = 'rgba(200,76,76,.8)';
-    setTimeout(() => input.style.borderColor = '', 2000);
-    input.focus();
-    showToast('Escribe tu nombre para generar tu pase');
-    return;
-  }
-
-  input.style.borderColor = '';
   document.getElementById('ticketGuest').textContent = name;
 
   const qrEl = document.getElementById('qrcode');
@@ -213,10 +212,6 @@ function createTicket() {
   } catch(err) {
     qrEl.innerHTML = '<p style="color:#7a6e63;font-size:.55rem;">QR</p>';
   }
-
-  ticket.classList.add('visible');
-  ticket.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  showToast('Tu invitación está lista');
 }
 
 function downloadTicket() {
@@ -270,28 +265,35 @@ function esFamiliar(nombreCompleto) {
   return FAMILIA.has(normalizado);
 }
 
-/* Valida en tiempo real cuando cambia la recepción o el nombre */
+/* Valida en tiempo real — solo después de que el usuario ha interactuado */
 (function initFamilyValidation() {
   const groupSel = document.getElementById('rsvpGroup');
   const nameIn   = document.getElementById('rsvpName');
-  if (!groupSel || !nameIn) return;
+  const msg      = document.getElementById('familyError');
+  if (!groupSel || !nameIn || !msg) return;
+
+  // Flags: only validate after user has touched each field
+  let groupTouched = false;
+  let nameTouched  = false;
 
   function check() {
-    const esFam = groupSel.value === 'Familia - 3:00 PM';
-    const msg   = document.getElementById('familyError');
-    if (!msg) return;
+    const esFam  = groupSel.value === 'Familia - 3:00 PM';
+    const nombre = nameIn.value.trim();
 
-    if (esFam && nameIn.value.trim() && !esFamiliar(nameIn.value)) {
+    // Only show error if: familia selected + name typed + not in list
+    if (groupTouched && esFam && nameTouched && nombre && !esFamiliar(nombre)) {
       msg.classList.add('visible');
-      groupSel.classList.add('bad');
+      groupSel.classList.add('family-restricted');
     } else {
       msg.classList.remove('visible');
-      groupSel.classList.remove('bad');
+      groupSel.classList.remove('family-restricted');
     }
   }
 
-  groupSel.addEventListener('change', check);
-  nameIn.addEventListener('input',    check);
+  groupSel.addEventListener('change', () => { groupTouched = true; check(); });
+  nameIn.addEventListener('input',    () => { nameTouched  = true; check(); });
+  // Also re-check when user returns to name field after selecting familia
+  nameIn.addEventListener('blur',     check);
 })();
 
 async function handleRSVP(e) {
@@ -313,9 +315,11 @@ async function handleRSVP(e) {
   const grupo  = document.getElementById('rsvpGroup').value;
 
   if (grupo === 'Familia - 3:00 PM' && !esFamiliar(nombre)) {
-    document.getElementById('rsvpGroup').classList.add('bad');
-    document.getElementById('familyError').classList.add('visible');
-    document.getElementById('familyError').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const errEl = document.getElementById('familyError');
+    const selEl = document.getElementById('rsvpGroup');
+    errEl.classList.add('visible');
+    selEl.classList.add('family-restricted');
+    errEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
@@ -370,7 +374,24 @@ function showSuccess(data) {
   document.getElementById('rsvpBody').innerHTML    = r.b;
   document.getElementById('rsvpForm').style.display = 'none';
   document.getElementById('rsvpOk').style.display   = 'block';
-  showToast('Confirmación recibida');
+
+  /* Mostrar invitación SOLO si va a asistir */
+  const invSection = document.getElementById('invitation');
+  if (data.confirm === 'Si, ahi estare') {
+    invSection.classList.remove('inv-hidden');
+    invSection.classList.add('inv-visible');
+
+    // Generate ticket with the confirmed name, slight delay for section to render
+    setTimeout(() => {
+      generateTicket(data.name);
+      invSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 450);
+    showToast('Confirmación recibida · Tu invitación está lista');
+  } else {
+    invSection.classList.add('inv-hidden');
+    invSection.classList.remove('inv-visible');
+    showToast('Confirmación recibida');
+  }
 }
 
 function resetRSVP() {
@@ -383,6 +404,13 @@ function resetRSVP() {
   });
   document.getElementById('rsvpGroup').value   = '';
   document.getElementById('rsvpConfirm').value = '';
+
+  // Hide invitation section again
+  const invSection = document.getElementById('invitation');
+  if (invSection) {
+    invSection.classList.add('inv-hidden');
+    invSection.classList.remove('inv-visible');
+  }
 }
 
 /* Restore previous answer on reload */
@@ -391,6 +419,11 @@ function resetRSVP() {
     const prev = JSON.parse(localStorage.getItem('ei_my_rsvp'));
     if (prev) showSuccess(prev);
   } catch(_) {}
+  // If no saved answer, make sure invitation stays hidden
+  const invSection = document.getElementById('invitation');
+  if (invSection && invSection.classList.contains('inv-hidden')) {
+    // already hidden, nothing to do
+  }
 })();
 
 /* ─── TOAST ─────────────────────────────────────── */
