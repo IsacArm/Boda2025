@@ -22,20 +22,40 @@
 <div id="intro">
   <!-- Rings: two divs + center gem, animated via JS -->
   <div class="rings-stage">
-    <div class="ring ring-a" id="ringA">
-      <div class="ring-gem"></div>
-    </div>
-    <div class="ring ring-b" id="ringB">
-      <div class="ring-gem"></div>
-    </div>
-    <div class="ring-sparkle" id="ringSpark">
-      <div class="spark-h"></div>
-      <div class="spark-v"></div>
-    </div>
+    <svg class="rings-svg" viewBox="0 0 200 116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="gld" x1="30%" y1="0%" x2="70%" y2="100%">
+          <stop offset="0%"   stop-color="#f7e68a"/>
+          <stop offset="22%"  stop-color="#d4a020"/>
+          <stop offset="50%"  stop-color="#7a5200"/>
+          <stop offset="78%"  stop-color="#d0a030"/>
+          <stop offset="100%" stop-color="#eedd6a"/>
+        </linearGradient>
+        <!-- Mask: reveal Ring-A front arc ONLY in upper overlap zone -->
+        <mask id="mTopA">
+          <rect width="200" height="116" fill="black"/>
+          <rect x="88" y="0" width="32" height="60" fill="white"/>
+        </mask>
+      </defs>
+
+      <!-- Group A: slides in from the LEFT -->
+      <g class="ring-group rg-a">
+        <!-- Ring A back (behind B) -->
+        <circle cx="78" cy="58" r="36" fill="none" stroke="url(#gld)" stroke-width="13"/>
+        <!-- Ring A front arc (above B in overlap zone) -->
+        <circle cx="78" cy="58" r="36" fill="none" stroke="url(#gld)" stroke-width="13" mask="url(#mTopA)"/>
+      </g>
+
+      <!-- Group B: slides in from the RIGHT -->
+      <g class="ring-group rg-b">
+        <circle cx="122" cy="58" r="36" fill="none" stroke="url(#gld)" stroke-width="13"/>
+      </g>
+    </svg>
   </div>
-  <p class="intro-names" id="introNames">Evelyn &amp; Isac</p>
-  <p class="intro-date"  id="introDate">21 · MARZO · 2026</p>
-  <button class="intro-btn" id="introBtn" onclick="closeIntro()">Ver Invitación</button>
+
+  <p class="intro-names">Evelyn &amp; Isac</p>
+  <p class="intro-date">21 · MARZO · 2026</p>
+  <button class="intro-btn" onclick="closeIntro()">Ver Invitación</button>
 </div>
 
 <!-- ══════════ HERO ══════════ -->
@@ -61,8 +81,8 @@
 
 <!-- ══════════ COUNTDOWN ══════════ -->
 <section id="countdown" class="s-dark2">
-  <p class="sec-label reveal">El Gran Día</p>
-  <h2 class="sec-title reveal">Falta <em>muy poco</em> para el sí</h2>
+  <p class="sec-label reveal">Nuestra Unión Civil</p>
+  <h2 class="sec-title reveal">Falta <em>muy poco</em></h2>
   <div class="cd-grid reveal">
     <div class="cd-box"><span class="cd-num" id="d">--</span><span class="cd-lbl">Días</span></div>
     <div class="cd-box"><span class="cd-num" id="h">--</span><span class="cd-lbl">Horas</span></div>
@@ -76,16 +96,16 @@
 
 <!-- ══════════ GALLERY ══════════ -->
 <section id="gallery" class="s-dark3">
-  <p class="sec-label reveal">Memorias</p>
-  <h2 class="sec-title reveal">Momentos que <em>nos definen</em></h2>
+  <p class="sec-label reveal">Galeria</p>
+  <h2 class="sec-title reveal">Momentos<em></em></h2>
 
   <div class="collage reveal" id="collage">
     <div class="ph ph1" data-idx="0"><img src="sources/1.jpeg" alt="" loading="lazy"></div>
     <div class="ph ph2" data-idx="1"><img src="sources/2.jpeg" alt="" loading="lazy"></div>
     <div class="ph ph3" data-idx="2"><img src="sources/3.jpeg" alt="" loading="lazy"></div>
-    <div class="ph ph4" data-idx="3"><img src="sources/4.jpeg" alt="" loading="lazy"></div>
-    <div class="ph ph5" data-idx="4"><img src="sources/5.jpeg" alt="" loading="lazy"></div>
-    <div class="ph ph6" data-idx="5"><img src="sources/6.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph4" data-idx="3"><img src="sources/5.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph5" data-idx="4"><img src="sources/6.jpeg" alt="" loading="lazy"></div>
+    <div class="ph ph6" data-idx="5"><img src="sources/7.jpeg" alt="" loading="lazy"></div>
     <div class="collage-label">
       <span class="cl-script">¡Te esperamos!</span>
     </div>
@@ -224,6 +244,9 @@
       <option value="Familia - 3:00 PM">Familia — 3:00 PM</option>
       <option value="Amigos - 7:00 PM">Amigos — 7:00 PM</option>
     </select>
+    <div class="family-error" id="familyError">
+      Lo sentimos, la recepción familiar está reservada únicamente para familiares y personas cercanas.
+    </div>
     <select class="rf rf-sel" id="rsvpConfirm" name="confirmacion" required>
       <option value="">Confirmas tu asistencia *</option>
       <option value="Si, ahi estare">Sí, ahí estaré</option>
@@ -253,7 +276,7 @@
   <div class="ft-orn">
     <div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line orn-line-r"></div>
   </div>
-  <p class="ft-copy">· 2026</p>
+  <p class="ft-copy">Marzo · 2026</p>
 </footer>
 
 <div id="toast" class="toast"></div>

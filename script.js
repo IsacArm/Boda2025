@@ -6,127 +6,11 @@
 const WEDDING_DATE = new Date('2026-03-21T15:00:00');
 const SITE_URL     = window.location.href;
 
-/* ─── BODY LOCK ─────────────────────────────────── */
-document.body.style.overflow = 'hidden';
-
-/* ═══════════════════════════════════════════════
-   RINGS ANIMATION
-   Pure JS — avoids SVG transform / CSS animation
-   cross-browser issues on mobile Safari
-   ═══════════════════════════════════════════════ */
-(function animateRings() {
-  const ringA  = document.getElementById('ringA');
-  const ringB  = document.getElementById('ringB');
-  const spark  = document.getElementById('ringSpark');
-  const names  = document.getElementById('introNames');
-  const date   = document.getElementById('introDate');
-  const btn    = document.getElementById('introBtn');
-
-  if (!ringA || !ringB) return;
-
-  /* Starting positions: rings far off-screen */
-  ringA.style.cssText += 'opacity:1; transform:translateX(-90px);';
-  ringB.style.cssText += 'opacity:1; transform:translateX(90px);';
-
-  /* Animation via requestAnimationFrame for buttery smoothness */
-  const DURATION = 900;   // ms for rings to slide together
-  let start = null;
-
-  function easeOutBack(t) {
-    const c1 = 1.40158;
-    const c3 = c1 + 1;
-    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-  }
-
-  function step(ts) {
-    if (!start) start = ts;
-    const elapsed = ts - start;
-    const progress = Math.min(elapsed / DURATION, 1);
-    const eased    = easeOutBack(progress);
-
-    /* Ring A: from -90px to 0 */
-    const posA = -90 + (90 * eased);
-    /* Ring B: from +90px to 0 */
-    const posB =  90 - (90 * eased);
-
-    ringA.style.transform = `translateX(${posA}px)`;
-    ringB.style.transform = `translateX(${posB}px)`;
-
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    } else {
-      /* Rings have landed — add glow */
-      ringA.style.boxShadow = '0 0 16px rgba(201,168,76,.5)';
-      ringB.style.boxShadow = '0 0 12px rgba(232,212,158,.4)';
-
-      /* Gems appear */
-      setTimeout(() => {
-        const gems = document.querySelectorAll('.ring-gem');
-        gems.forEach(g => {
-          g.style.transition = 'opacity .3s ease, transform .3s ease';
-          g.style.opacity = '1';
-        });
-      }, 80);
-
-      /* Sparkle bursts */
-      setTimeout(() => {
-        if (spark) {
-          spark.style.transition = 'opacity .25s ease, transform .25s ease';
-          spark.style.opacity    = '1';
-          spark.style.transform  = 'translate(-50%,-50%) scale(1)';
-        }
-      }, 200);
-
-      /* Ambient glow pulse */
-      ringA.style.animation = 'ringGlow 2.5s 0.5s ease-in-out infinite alternate';
-      ringB.style.animation = 'ringGlow 2.5s 0.8s ease-in-out infinite alternate';
-
-      /* Fade in text */
-      const fadeIn = (el, delay) => {
-        if (!el) return;
-        setTimeout(() => {
-          el.style.transition = 'opacity .7s ease, transform .7s ease';
-          el.style.transform  = 'none';
-          el.style.opacity    = '1';
-        }, delay);
-      };
-
-      setTimeout(() => {
-        names.style.transform = 'translateY(8px)';
-        date.style.transform  = 'translateY(8px)';
-        btn.style.transform   = 'translateY(8px)';
-      }, 0);
-
-      fadeIn(names, 350);
-      fadeIn(date,  560);
-      fadeIn(btn,   780);
-    }
-  }
-
-  /* Delay start slightly so fonts load */
-  setTimeout(() => requestAnimationFrame(step), 280);
-})();
-
-/* Inject keyframe for ambient ring glow */
-(function injectGlowKeyframe() {
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes ringGlow {
-      from { box-shadow: 0 0  8px rgba(201,168,76,.2); }
-      to   { box-shadow: 0 0 20px rgba(201,168,76,.55); }
-    }
-  `;
-  document.head.appendChild(style);
-})();
-
 /* ─── CLOSE INTRO ───────────────────────────────── */
 function closeIntro() {
   const el = document.getElementById('intro');
   el.classList.add('out');
-  setTimeout(() => {
-    el.style.display = 'none';
-    document.body.style.overflow = '';
-  }, 840);
+  setTimeout(() => { el.style.display = 'none'; }, 840);
 }
 
 /* ═══════════════════════════════════════════════
@@ -371,6 +255,45 @@ function shareTicket() {
    (recibes un email por cada respuesta)
    También se guardan en localStorage del invitado.
    ═══════════════════════════════════════════════ */
+
+/* Lista de nombres autorizados para recepción familiar */
+const FAMILIA = new Set([
+  'evelyn','azmin','rubi','fernando','melody','martin','lidia',
+  'alma','ruth','maria','claudia','yolanda','marisol','david',
+  'jonathan','ausencio','alicia','gerardo','diego','karen'
+]);
+
+function esFamiliar(nombreCompleto) {
+  /* Toma el primer nombre, quita acentos, compara en minúsculas */
+  const primero = nombreCompleto.trim().split(/\s+/)[0];
+  const normalizado = primero.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  return FAMILIA.has(normalizado);
+}
+
+/* Valida en tiempo real cuando cambia la recepción o el nombre */
+(function initFamilyValidation() {
+  const groupSel = document.getElementById('rsvpGroup');
+  const nameIn   = document.getElementById('rsvpName');
+  if (!groupSel || !nameIn) return;
+
+  function check() {
+    const esFam = groupSel.value === 'Familia - 3:00 PM';
+    const msg   = document.getElementById('familyError');
+    if (!msg) return;
+
+    if (esFam && nameIn.value.trim() && !esFamiliar(nameIn.value)) {
+      msg.classList.add('visible');
+      groupSel.classList.add('bad');
+    } else {
+      msg.classList.remove('visible');
+      groupSel.classList.remove('bad');
+    }
+  }
+
+  groupSel.addEventListener('change', check);
+  nameIn.addEventListener('input',    check);
+})();
+
 async function handleRSVP(e) {
   e.preventDefault();
 
@@ -384,6 +307,17 @@ async function handleRSVP(e) {
   });
 
   if (!ok) { showToast('Completa los campos obligatorios'); return; }
+
+  /* Validar acceso familiar */
+  const nombre = document.getElementById('rsvpName').value.trim();
+  const grupo  = document.getElementById('rsvpGroup').value;
+
+  if (grupo === 'Familia - 3:00 PM' && !esFamiliar(nombre)) {
+    document.getElementById('rsvpGroup').classList.add('bad');
+    document.getElementById('familyError').classList.add('visible');
+    document.getElementById('familyError').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
   const form = document.getElementById('rsvpForm');
 
