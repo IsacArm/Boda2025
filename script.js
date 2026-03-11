@@ -255,7 +255,7 @@ function shareTicket() {
 const FAMILIA = new Set([
   'evelyn','azmin','rubi','fernando','melody','martin','lidia',
   'alma','ruth','maria','claudia','yolanda','marisol','david',
-  'jonathan','ausencio','alicia','gerardo','diego','karen'
+  'jonathan','ausencio','alicia','gerardo','diego','karen','kevin', 'belen','hannia', 'ruben', 'franco','reinaldo','oswaldo','aleida', 'jorge','eduardo','eddy','hilda', 'castillo', 'lozano' 
 ]);
 
 function esFamiliar(nombreCompleto) {
@@ -452,4 +452,5 @@ function esc(s) {
   return String(s)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
 }
